@@ -1,26 +1,44 @@
+# this is name of the workflow that will be displayed in the Actions Tab
 name: CICD
-on: 
- workflow_dispatch:
 
- jobs:
-   code:
-     runs-on: ubantu-latest
-     steps:
-       - name: Clone the Code
-         run: echo "Cloning the code"
-   build:
-     runs-on: ubantu-latest
-     steps:
-       - name: Bulding using Docker
-         run: echo "Bulding using Docker"
-   test:
-     runs-on: ubantu-latest
-     steps:
-       - name: Running test cases
-         run: echo "Testing the app"
-   deploy:
-     runs-on: ubantu-latest
-     steps:
-       - name: Deploying on the machine
-         run: echo "Deploying the code"
-   
+# Manual click (deliver) workflow whenever user needs
+on:
+  workflow_dispatch: 
+    inputs:
+      environment:
+        description: This is the environment value where this workflow runs
+        default: 'dev'
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+          - staging
+
+jobs:
+  # every job needs seperate runner, its called parallelism
+  code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        run: echo "COde Clone from GitHub"
+  build:
+    needs: [code]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Docker Container
+        run: echo "Docker Container build"
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test the container
+        run: echo "Testing the container"
+        
+  deploy:
+    if: inputs.environment == 'dev'
+    needs: [build,test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploying the app
+        run: echo "Docker compose deployed the app"
