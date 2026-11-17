@@ -1,5 +1,5 @@
 name: CICD
-ON: 
+on: 
  workflow_dispatch:
 
  jobs:
