@@ -7,7 +7,7 @@ on:
 workflow_dispatch:
 
 # Jobs tells what the workflow should do, there can be one or more jobs, hence we write jobs
-#jobs is an object so needs indentation 
+# jobs is an object so needs indentation 
 # jobs:
 # Should be inside the workflow
 
