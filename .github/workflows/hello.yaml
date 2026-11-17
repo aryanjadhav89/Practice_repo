@@ -4,7 +4,7 @@ name: Hello
 
 # On tells When the workflow should run (Give Indentation by tab)
 on:
-workflow_dispatch:
+ workflow_dispatch:
 
 # Jobs tells what the workflow should do, there can be one or more jobs, hence we write jobs
 # jobs is an object so needs indentation 
@@ -18,6 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     # That ephermal container will have steps to execute, hence name those steps and use run: run has command
     steps:
-      - namw: Say Hello
-      run: echo "hello Dosto"
+      - name: Say Hello
+        run: echo "hello Dosto"
 
